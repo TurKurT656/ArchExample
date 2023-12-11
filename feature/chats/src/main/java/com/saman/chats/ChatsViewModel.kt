@@ -48,6 +48,12 @@ class ChatsViewModel @Inject internal constructor(
                 }
                 emitCoordinatorEffect(ChatsCoordinatorEffect.SelectionCount(0))
             }
+            is UIAction.ScrollPositionChange -> {
+                updateUiState {
+                    scrollPositionIndex.value = uiAction.index
+                    copy(scrollPositionIndex = scrollPositionIndex)
+                }
+            }
         }
     }
 

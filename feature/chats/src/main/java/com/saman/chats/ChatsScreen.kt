@@ -14,13 +14,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,7 +37,18 @@ fun ChatsScreen(
     uiState: UIState,
     onAction: (UIAction) -> Unit
 ) {
-    LazyColumn(modifier = modifier) {
+
+    val lazyListState = rememberLazyListState(
+        initialFirstVisibleItemIndex = uiState.scrollPositionIndex.value,
+        onFirstVisibleItemIndexChange = {
+            onAction(UIAction.ScrollPositionChange(it))
+        }
+    )
+
+    LazyColumn(
+        modifier = modifier,
+        state = lazyListState
+    ) {
         itemsIndexed(uiState.chats) { index, chat ->
             Chat(
                 chat = chat,

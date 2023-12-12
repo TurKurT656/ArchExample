@@ -21,14 +21,8 @@ object TopbarContract {
         companion object {
             fun initial() = UIState(
                 tabs = listOf(
-                    Tab(
-                        "Chats",
-                        0,
-                    ),
-                    Tab(
-                        "Channels",
-                        0,
-                    ),
+                    Tab.initial("Chats"),
+                    Tab.initial("Channels"),
                 ),
                 selectedTabIndex = 0,
             )
@@ -39,5 +33,6 @@ object TopbarContract {
         object OnDeleteClick : UIAction
         data class OnTabClick(val index: Int): UIAction
         data class SelectionCount(val count: Int): UIAction
+        data class UnreadCount(val count: Int) : UIAction
     }
 }

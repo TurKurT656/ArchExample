@@ -77,8 +77,10 @@ class ChatsViewModel @Inject internal constructor(
 
     private fun getChatList() {
         viewModelScope.launch {
-            val list = getChatListUseCase.invoke()
-            updateUiState { copy(chats = list) }
+            val chats = getChatListUseCase.invoke()
+            updateUiState { copy(chats = chats) }
+            val totalUnreadCount = chats.sumOf { it.unreadCount }
+            emitCoordinatorEffect(ChatsCoordinatorEffect.UnreadCount(totalUnreadCount))
         }
     }
 }

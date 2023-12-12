@@ -33,6 +33,15 @@ class TopbarViewModel @Inject constructor() : ViewModel(),
                 }
             }
 
+            is UIAction.UnreadCount -> {
+                updateUiState {
+                    val count = uiAction.count
+                    val tabs = tabs.toMutableList()
+                    tabs[selectedTabIndex] = tabs[selectedTabIndex].copy(unreadCount = count)
+                    copy(tabs = tabs)
+                }
+            }
+
             UIAction.OnDeleteClick -> {
                 emitCoordinatorEffect(TopbarCoordinatorEffect.DeleteSelected)
             }

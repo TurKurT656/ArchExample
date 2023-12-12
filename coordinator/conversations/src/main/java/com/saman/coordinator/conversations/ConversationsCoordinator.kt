@@ -30,6 +30,9 @@ internal fun ConversationsCoordinator(
             is ChatsCoordinatorEffect.SelectionCount -> {
                 topbarViewModel.onAction(TopbarContract.UIAction.SelectionCount(it.count))
             }
+            is ChatsCoordinatorEffect.UnreadCount -> {
+                topbarViewModel.onAction(TopbarContract.UIAction.UnreadCount(it.count))
+            }
         }
     }
 }
